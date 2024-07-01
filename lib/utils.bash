@@ -31,8 +31,6 @@ list_github_tags() {
 }
 
 list_all_versions() {
-  # TODO: Adapt this. By default we simply list the tag names from GitHub releases.
-  # Change this function if swiftlint has other means of determining installable versions.
   list_github_tags
 }
 
@@ -41,8 +39,7 @@ download_release() {
   version="$1"
   filename="$2"
 
-  # TODO: Adapt the release URL convention for swiftlint
-  url="$GH_REPO/archive/v${version}.tar.gz"
+  url= "https://github.com/realm/SwiftLint/releases/download/$ASDF_INSTALL_VERSION/portable_swiftlint.zip"
 
   echo "* Downloading $TOOL_NAME release $version..."
   curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
