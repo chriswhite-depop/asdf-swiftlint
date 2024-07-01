@@ -40,9 +40,11 @@ download_release() {
   filename="$2"
 
   url= "https://github.com/realm/SwiftLint/releases/download/$ASDF_INSTALL_VERSION/portable_swiftlint.zip"
+  echo "* Downloading $TOOL_NAME release $version... from $url"
 
   echo "* Downloading $TOOL_NAME release $version..."
   curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
+  echo "* Downloaded $filename"
 }
 
 install_version() {
