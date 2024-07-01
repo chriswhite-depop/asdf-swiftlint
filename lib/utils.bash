@@ -14,7 +14,6 @@ fail() {
 
 curl_opts=(-fsSL)
 
-# NOTE: You might want to remove this if swiftlint is not hosted on GitHub releases.
 if [ -n "${GITHUB_API_TOKEN:-}" ]; then
   curl_opts=("${curl_opts[@]}" -H "Authorization: token $GITHUB_API_TOKEN")
 fi
@@ -27,7 +26,7 @@ sort_versions() {
 list_github_tags() {
   git ls-remote --tags --refs "$GH_REPO" |
     grep -o 'refs/tags/.*' | cut -d/ -f3- |
-    sed 's/^v//' # NOTE: You might want to adapt this sed to remove non-version strings from tags
+    sed 's/^v//'
 }
 
 list_all_versions() {
@@ -39,12 +38,10 @@ download_release() {
   version="$1"
   filename="$2"
 
-  url= "https://github.com/realm/SwiftLint/releases/download/$ASDF_INSTALL_VERSION/portable_swiftlint.zip"
-  echo "* Downloading $TOOL_NAME release $version... from $url"
+  url="$GH_REPO/releases/download/${version}/swiftformat.zip"
 
   echo "* Downloading $TOOL_NAME release $version..."
   curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
-  echo "* Downloaded $filename"
 }
 
 install_version() {
